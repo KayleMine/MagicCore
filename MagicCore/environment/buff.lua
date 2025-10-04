@@ -83,6 +83,14 @@ function buff:stealable()
   return false
 end
 
+function buff:rank()
+  local buff, rank, icon, count, debuffType, duration, expires, caster, isStealable, shouldConsolidate, id = UB(self.unitID, self.spell, 'any')
+  if rank then
+    return rank
+  end
+  return 0
+end
+
 function MagicCore.buff(unit)
   return setmetatable({
     unitID = unit.unitID

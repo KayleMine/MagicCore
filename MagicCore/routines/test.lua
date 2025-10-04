@@ -55,7 +55,10 @@ end
 local function resting()
 	if not player or not player.exists or not player.alive then return end
 	if Destruction.etc() then return end
-	
+	local unit = buffTarget(5, C_Spell.GetSpellName(42995))
+	if unit then
+		cast(42995)
+	end
 	if power.mana.percent > 60 and castable(SB.DemonSkin) and player.buff(SB.DemonSkin).down then
 		cast(SB.DemonSkin)
 		return true
@@ -67,7 +70,7 @@ for _, func in pairs(Destruction) do
 end
 
 return MagicCore.register({
-  classID = 9,
+  classID = 8,
   name = "corruption",
   label = "|cff33ff99 Corruption warlock|r",
   combat = combat,

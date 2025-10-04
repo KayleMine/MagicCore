@@ -1,4 +1,5 @@
 local addonName, _A, MagicCore = ...
+local C_Spell = MagicCore.C_Spell
 
 MagicCore.cast = MagicCore.cast or {}
 local cast = MagicCore.cast
@@ -10,13 +11,15 @@ end
 
 cast.cast = function(spellID, unit)
     unit = unit or MagicCore.Environment.GetUnit("player")
-    return _A.Cast(spellID, unit.unitID)
+	local bad_fix = C_Spell.GetSpellName(spellID)
+    return _A.Cast(bad_fix, unit.unitID)
 end
 
 cast.cast_ground = function(spellID, unit)
     unit = unit or MagicCore.Environment.GetUnit("player")
+	local bad_fix = C_Spell.GetSpellName(spellID)
 	if unit.moving then
-		return _A.CastGroundSpeed(spellID, unit.unitID)
+		return _A.CastGroundSpeed(bad_fix, unit.unitID)
 	end
-    return _A.CastGround(spellID, unit.unitID)
+    return _A.CastGround(bad_fix, unit.unitID)
 end

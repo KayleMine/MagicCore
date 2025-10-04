@@ -23,3 +23,19 @@ C_Spell.GetSpellName = function(spell)
     local name = GetSpellInfo(spell)
     return name;
 end
+
+C_Spell.GetSpellInfo = function(spell)
+    local name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon = GetSpellInfo(spell)
+    local SpellInfo = {
+        name = name,
+        iconID = icon,
+        originalIconID = originalIcon,
+        castTime = castTime,
+        minRange = minRange,
+        maxRange = maxRange,
+        spellID = spellID,
+        rank = rank
+    }
+    return SpellInfo
+end
+

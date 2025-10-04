@@ -56,6 +56,7 @@ local function CreateVirtualUnit(unitID)
   obj.powerType = MagicCore.powerType(obj)
   obj.power = MagicCore.power(obj)
   obj.spell = MagicCore.spell(obj)
+  obj.C_Spell = MagicCore.C_Spell
 
 
   local mt = {

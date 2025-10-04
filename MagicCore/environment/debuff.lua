@@ -6,7 +6,7 @@ local function UB(unit, spellID, filter)
 	if filter == nil then
         return UnitDebuff(unit, spellName)
     else
-		local buff, rank, icon, count, debuffType, duration, expires, caster, isStealable, shouldConsolidate, id = UnitDebuff(unit, spellName, nil, filter)
+		--local buff, rank, icon, count, debuffType, duration, expires, caster, isStealable, shouldConsolidate, id = UnitDebuff(unit, spellName, nil, filter)
 		return UnitDebuff(unit, spellName, nil, filter)
     end
 end
@@ -80,6 +80,14 @@ function debuff:stealable()
     return true
   end
   return false
+end
+ 
+function debuff:rank()
+  local buff, rank, icon, count, debuffType, duration, expires, caster, isStealable, shouldConsolidate, id = UB(self.unitID, self.spell, 'any')
+  if rank then
+    return rank
+  end
+  return 0
 end
  
 function MagicCore.debuff(unit)
