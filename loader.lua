@@ -3,6 +3,9 @@ local _G = _A._G
 local apepDirectory = _A.GetApepDirectory()
 local LOCAL_PATH = apepDirectory .. "\\rotations\\MagicCore\\"
 local ROTATIONS_PATH = LOCAL_PATH .. "routines\\"
+local ROTATION_GUI = nil; 
+local CR_SETTINGS_MENU_NAME = "|cFFFF0000CR Settings|r"
+local STATIC_SETTINGS_BUTTON_KEY = "Active_Rotation_Settings_Link"
 
 -- === Вспомогательные функции ===
 local _, Class = UnitClass("player");
@@ -50,6 +53,68 @@ local coa_class_table = {
 
 local cid = class_table[Class]
 local coaid = coa_class_table[Class]
+
+
+local function ToggleRotationGUI(routine)
+    if not routine or not routine.gui then
+        print("|cFFff0000Core:|r Active rotation has no GUI settings.")
+        return
+    end
+
+    if ROTATION_GUI then
+        _A.Interface:hideGUI(ROTATION_GUI)
+    end
+    
+    local gui_cfg = routine.gui_st or {
+        title = routine.label or routine.name,
+        color = "67E667",
+        width = 320,
+        height = 420
+    }
+
+    -- Создаем уникальный ключ для самого окна, используя формат пользователя
+    local gui_key = "settings_" .. routine.name .. "_" .. UnitName('player')
+
+    ROTATION_GUI = _A.Interface:BuildGUI({
+        key = gui_key,
+        width = gui_cfg.width,
+        height = gui_cfg.height,
+        title = "|cff00ffffMagicCore: Config|r " .. (routine.label or routine.name),
+        config = routine.gui,
+    })
+
+end
+
+local menu
+local addedSubMenus = {}
+local function UpdateSettingsMenu(routine)
+    menu = menu or _A.Interface:AddCustomMenu(CR_SETTINGS_MENU_NAME) 
+
+    if not routine or not routine.gui then
+        if not addedSubMenus["No settings for that"] then
+            _A.Interface:AddCustomSubMenu(menu, "No settings for that", function() end, STATIC_SETTINGS_BUTTON_KEY)
+            addedSubMenus["No settings for that"] = true
+        end
+        return
+    end
+
+    local label = gsub(routine.label or routine.name, "|cff%x%x%x%x%x%x", "")
+    label = gsub(label, "|r", "")
+    
+    local buttonText = label .. " - cfg"
+
+if not addedSubMenus[buttonText] then
+    local routineRef = routine
+    _A.Interface:AddCustomSubMenu(menu, buttonText, function()
+        ToggleRotationGUI(routineRef)
+    end, STATIC_SETTINGS_BUTTON_KEY)
+
+    addedSubMenus[buttonText] = true
+    print("|cFF00ff00Core:|r Updated CR Settings menu: " .. buttonText)
+end
+
+end
+
 
 local function LoadRotation(filePath)
     if not filePath then return false end
@@ -113,7 +178,7 @@ local function SetActiveRotation(rotId)
     end
 end
 
--- === Инициализация Core (остается прежней) ===
+-- === Инициализация Core ===
 
 -- Загрузка базовых файлов
 LoadCore("core\\init.lua")
@@ -189,6 +254,8 @@ local MAGIC_CORE_GUI = _A.Interface:BuildGUI({
 		{ type = "button", text = "Load", width = 180, height = 20, size = 24, callback = function()
 			local initialRotation = _A.Interface:Fetch('MagicCoreGUI_'..UnitName('player'), 'active_rotation', defaultRotation)
 				SetActiveRotation(initialRotation)
+				local routine = MagicCore.routines[initialRotation]
+				UpdateSettingsMenu(routine)
 			end },
 		}
 	})
@@ -201,5 +268,9 @@ local MAGIC_CORE_GUI = _A.Interface:BuildGUI({
     MAGIC_CORE_GUI.parent:Hide()
 	
 	local initialRotation = MAGIC_CORE_GUI:F('active_rotation', defaultRotation)
-	SetActiveRotation(initialRotation)
+	if initialRotation and initialRotation ~= "none" then
+		MagicCore.setActiveRotation(initialRotation)
+		local routine = MagicCore.routines[initialRotation] 
+		UpdateSettingsMenu(routine) 
+	end
 end)

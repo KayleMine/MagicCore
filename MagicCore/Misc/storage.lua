@@ -45,6 +45,11 @@ function MagicCore.settings.fetch(key, default)
     return value == nil and default or value
 end
 
+function MagicCore.settings.InterfaceFetch(key, default)
+    local value = _A.Interface:Fetch("settings_" .. MagicCore.activeRotation.name .. "_" .. UnitName('player'), key, default)
+    return value == nil and default or value
+end
+
 -- function DBM_Affliction.settings.store_toggle(key, value)
     -- if not DBM_Affliction.rotation.current_spec then return end
     -- local active_rotation = DBM_Affliction.settings.fetch('active_rotation_' .. DBM_Affliction.rotation.current_spec, false)

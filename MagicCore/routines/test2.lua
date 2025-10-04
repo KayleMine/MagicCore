@@ -117,8 +117,8 @@ end
 
 return MagicCore.register({
   classID = MagicCore.CEnum.MAGE,
-  name = "corruption",
-  label = "|cff33ff99 Corruption warlock|r",
+  name = "agony",
+  label = "|cff33ff99 Agony warlock|r",
   combat = combat,
   resting = resting,
   gui = GUI,
