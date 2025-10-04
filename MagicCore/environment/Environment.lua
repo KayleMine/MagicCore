@@ -56,9 +56,7 @@ local function CreateVirtualUnit(unitID)
   obj.powerType = MagicCore.powerType(obj)
   obj.power = MagicCore.power(obj)
   obj.spell = MagicCore.spell(obj)
-  obj.C_Spell = MagicCore.C_Spell
-
-
+ 
   local mt = {
 	__index = function(t, k)
 		local fn = t.methods[k]
@@ -100,6 +98,14 @@ setmetatable(MagicCore.Environment.env, {
 
 	if MagicCore.cast and MagicCore.cast[k] then
 		return MagicCore.cast[k]
+	end
+	
+	if MagicCore.C_Spell and MagicCore.C_Spell[k] then
+		return MagicCore.C_Spell[k]
+	end	
+
+	if MagicCore.Support and MagicCore.Support[k] then
+		return MagicCore.Support[k]
 	end
 	
 	if MagicCore.unit_around and MagicCore.unit_around[k] then
