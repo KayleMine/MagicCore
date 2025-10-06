@@ -9,15 +9,23 @@ cast.castable = function(spellID, unit)
     return unit.spell(spellID).castable
 end
 
-cast.cast = function(spellID, unit)
+cast.cast = function(spellID, unit, forceID)
     unit = unit or MagicCore.Environment.GetUnit("player")
-	local bad_fix = C_Spell.GetSpellName(spellID)
+	local bad_fix = spellID;
+	
+	if not forceID then
+		bad_fix = C_Spell.GetSpellName(spellID)
+	end
     return _A.Cast(bad_fix, unit.unitID)
 end
 
-cast.cast_ground = function(spellID, unit)
+cast.cast_ground = function(spellID, unit, forceID)
     unit = unit or MagicCore.Environment.GetUnit("player")
-	local bad_fix = C_Spell.GetSpellName(spellID)
+	local bad_fix = spellID;
+	
+	if not forceID then
+		bad_fix = C_Spell.GetSpellName(spellID)
+	end
 	if unit.moving then
 		return _A.CastGroundSpeed(bad_fix, unit.unitID)
 	end

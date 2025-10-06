@@ -126,7 +126,7 @@ local function LoadRotation(filePath)
     end
     local func, errorMessage = loadstring(content, "MagicCore_" .. filePath)
     if func then
-        local success, rotId, err = pcall(func, addonName, _A, MagicCore)
+        local success, rotId = pcall(func, addonName, _A, MagicCore)
         if success then
             if type(rotId) == "table" then
                 print("|cFF00ff00Core:|r Loaded " .. filePath .. " (ID: " .. rotId.id .. ")")
@@ -136,7 +136,7 @@ local function LoadRotation(filePath)
                 return true, nil
             end
         else
-            print("|cFFff0000Error:|r " .. filePath .. " execution failed\n" .. err)
+            print("|cFFff0000Error:|r " .. filePath .. " execution failed\n" .. tostring(rotId))
             return false, nil
         end 
     else
@@ -179,26 +179,45 @@ local function SetActiveRotation(rotId)
 end
 
 -- === Инициализация Core ===
-
+--local apepDirectory = _A.GetApepDirectory()
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", "\n"..GetTime().." Init log!\n", true)
 -- Загрузка базовых файлов
 LoadCore("core\\init.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " Init.lua pass!\n", true)
 LoadCore("core\\C_Spell.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " C_Spell.lua pass!\n", true)
 LoadCore("core\\Auras.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " Auras.lua pass!\n", true)
 LoadCore("environment\\unit_around.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " unit_around.lua pass!\n", true)
 LoadCore("environment\\Environment.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " Environment.lua pass!\n", true)
 LoadCore("core\\register.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " register.lua pass!\n", true)
 LoadCore("Misc\\Listener.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " Listener.lua pass!\n", true)
 LoadCore("Misc\\storage.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " storage.lua pass!\n", true)
 LoadCore("Misc\\support.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " support.lua pass!\n", true)
+LoadCore("core\\ticker.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " ticker.lua pass!\n", true)
 LoadCore("environment\\unit.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " unit.lua pass!\n", true)
 LoadCore("environment\\health.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " health.lua pass!\n", true)
 LoadCore("environment\\buff.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " buff.lua pass!\n", true)
 LoadCore("environment\\debuff.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " debuff.lua pass!\n", true)
 LoadCore("environment\\powertype.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " powertype.lua pass!\n", true)
 LoadCore("environment\\power.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " power.lua pass!\n", true)
 LoadCore("environment\\spell.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " spell.lua pass!\n", true)
 LoadCore("environment\\cast.lua")
- 
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " cast.lua pass!\n", true)
 
 -- === Сканирование и Загрузка Ротаций ===
 local rotationFiles = _A.GetDirectoryFiles(ROTATIONS_PATH, false)
@@ -208,6 +227,8 @@ local defaultRotation = "none"
 if rotationFiles and #rotationFiles > 0 then
     for i, file in ipairs(rotationFiles) do
         local success, rotInfo = LoadRotation("routines\\" .. file)
+		--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " routine "..file.." load pass!\n", true)
+
         if success and type(rotInfo) == "table" and rotInfo.id and rotInfo.label then
             local rotationClassID = rotInfo.classID or class_table.None
             if rotationClassID == cid then
@@ -225,12 +246,13 @@ if #rotationOptions == 0 then
     table.insert(rotationOptions, { key = "none", text = "No Rotations Available for " .. Class })
     defaultRotation = "none"
 end
-
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", GetTime().." log end!\n", true)
 
 
 -- === GUI ===
 local MAGIC_CORE_GUI = nil;
 _A.Core:WhenInGame(function()
+
 local MAGIC_CORE_GUI = _A.Interface:BuildGUI({
 	key = "MagicCoreGUI_"..UnitName('player'),
 	width = 350,

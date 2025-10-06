@@ -66,6 +66,10 @@ unit_around.lowestEnemyInRange = function(rangeYards)
     return findAndSortUnit('Enemy', rangeYards, nil, nil, true)
 end
 
+unit_around.highestEnemyInRange = function(rangeYards)
+    return findAndSortUnit('EnemyCombat', rangeYards, nil, nil, false)
+end
+
 -- Враги в бою (самое низкое HP)
 unit_around.lowestEnemyCombatInRange = function(rangeYards)
     return findAndSortUnit('EnemyCombat', rangeYards, nil, nil, true)

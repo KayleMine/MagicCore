@@ -238,7 +238,26 @@ hooksecurefunc("SetItemRef", function(link, ...)
 	local id = tonumber(link:match("spell:(%d+)"))
 	if id then addLine(ItemRefTooltip,id) end
 end)
+local function addTalentIDLine(self, talentID)
+    if talentID then
+        self:AddDoubleLine("TalentID:", "|cffffffff" .. talentID)
+        self:Show()
+    end
+end
 
+hooksecurefunc(GameTooltip, "SetTalent", function(self, tab, index, ...)
+    local talentID
+    local link = GetTalentLink(tab, index)
+    
+    if link then
+        local _, _, id = string.find(link, "talent:(%d+)")
+        talentID = tonumber(id)
+    end
+
+    if talentID then
+        addTalentIDLine(self, talentID)
+    end
+end)
 -- Item Hooks -----------------------------------------------------------------
 
 local function attachItemTooltip(self)
