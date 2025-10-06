@@ -47,7 +47,7 @@ end
 Arcane.cooldowns = function()
 if not toggle("Cooldowns") then return end
 	
-	if iknow(SB.Evocation) and castable(SB.Evocation) and player.power.mana.percent <= 40 then
+	if not player.moving and iknow(SB.Evocation) and castable(SB.Evocation) and player.power.mana.percent <= 40 then
 		cast(SB.Evocation, player)
 		return true
 	end
@@ -163,7 +163,7 @@ local function combat()
 	local EC_Melee = EnemyCount(8);
 	EC_Ranged = EnemyCount(15, player);
 	
-	if target.exists and target.alive and target.enemy then
+	if target and target.exists and target.alive and target.enemy then
 	EC_Ranged = EnemyCount(15, target);
 	
 	if EC_Ranged >= EC_Melee then
@@ -189,7 +189,7 @@ end
  
 
 local function resting()
-	if not player or not player.exists or not player.alive then return end
+	if not player or not player.alive then return end
 	if Arcane.etc() then return end
 
 end
