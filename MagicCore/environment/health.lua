@@ -10,13 +10,13 @@ function health:actual()
   return UnitHealth(self.unitID)
 end
 
-function health:effective()
-  return (UnitHealth(self.unitID) + (UnitGetIncomingHeals(self.unitID) or 0)) / UnitHealthMax(self.unitID) * 100
-end
+-- function health:effective()
+  -- return (UnitHealth(self.unitID) + (UnitGetIncomingHeals(self.unitID) or 0)) / UnitHealthMax(self.unitID) * 100 -- sad noise, UnitGetIncomingHeals can't be repeated on wotlk?
+-- end
 
-function health:incoming()
-  return UnitGetIncomingHeals(self.unitID) or 0
-end
+-- function health:incoming()
+  -- return UnitGetIncomingHeals(self.unitID) or 0
+-- end
 
 function health:missing()
   return (UnitHealthMax(self.unitID) - UnitHealth(self.unitID))/UnitHealthMax(self.unitID) * 100
