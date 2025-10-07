@@ -218,6 +218,8 @@ LoadCore("environment\\spell.lua")
 --_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " spell.lua pass!\n", true)
 LoadCore("environment\\cast.lua")
 --_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " cast.lua pass!\n", true)
+LoadCore("environment\\keybinds.lua")
+--_A.WriteFile(apepDirectory.."\\rotations\\MagicCore\\core.log", " keybinds.lua pass!\n", true)
 
 -- === Сканирование и Загрузка Ротаций ===
 local rotationFiles = _A.GetDirectoryFiles(ROTATIONS_PATH, false)
