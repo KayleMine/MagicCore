@@ -191,7 +191,6 @@ end
 local function resting()
 	if not player or not player.alive then return end
 	if Arcane.etc() then return end
-
 end
 
 

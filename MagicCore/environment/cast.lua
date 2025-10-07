@@ -31,3 +31,20 @@ cast.cast_ground = function(spellID, unit, forceID)
 	end
     return _A.CastGround(bad_fix, unit.unitID)
 end
+
+cast.cast_mouse = function(spellID, unit, forceID)
+	local bad_fix = spellID;
+	
+	if not forceID then
+		bad_fix = C_Spell.GetSpellName(spellID)
+	end
+	local mX, mY = _A.GetCursorPosition()
+	local collision, x, y, z = _A.ScreenToWorld(mX, mY)
+	local px, py, pz = _A.ObjectPosition("player")
+	local distance = _A.GetDistanceBetweenPositions(x, y, z, px, py, pz)
+	if not collision or distance > 45 or not _A.IsForeground() then return end
+	if SpellIsTargeting() then
+		_A.ClickPosition(x, y, z)
+	end
+	_A.Cast(bad_fix)
+end
