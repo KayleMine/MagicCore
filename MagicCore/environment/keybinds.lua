@@ -33,7 +33,7 @@ local keyAliases = {
 }
 
 
-keybinds.IsPressed(key)
+keybinds.IsPressed = function(key)
 	if not key then return false end
 	key = key:upper()
 	if keyAliases[key:lower()] then
