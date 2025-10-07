@@ -111,6 +111,10 @@ setmetatable(MagicCore.Environment.env, {
 	if MagicCore.unit_around and MagicCore.unit_around[k] then
 		return MagicCore.unit_around[k]
 	end
+	
+	if MagicCore.keybinds and MagicCore.keybinds[k] then
+		return MagicCore.keybinds[k]
+	end
 
     local player = MagicCore.Environment.GetUnit("player")
     if player and player[k] ~= nil then
