@@ -42,7 +42,7 @@ Arcane.etc = function()
 		cast(SB.AmplifyMagic, player)
 		return true
 	end
-end
+end	
 
 Arcane.cooldowns = function()
 if not toggle("Cooldowns") then return end
@@ -69,9 +69,16 @@ if not toggle("Cooldowns") then return end
 
 end
 
+SB.MageInterrupt_Blank = 12345; -- <- hey hey its blank change id!
 Arcane.interrupts = function()
 if not toggle("Interrupts") then return end
-
+--[[
+	local intpercent = math.random(35,65)
+	if castable(SB.MageInterrupt_Blank) and target.interrupt(intpercent, false) and target.distance <= 30 then
+		cast(SB.MageInterrupt_Blank, "target")
+		return true
+	end
+]]
 end
 
 
@@ -191,6 +198,16 @@ end
 local function resting()
 	if not player or not player.alive then return end
 	if Arcane.etc() then return end
+
+	-- if (IsPressed("ctrl") or IsCombo("shift+alt")) and castable(SB.Blizzard9) then
+		-- cast_mouse(SB.Blizzard9)
+		-- return true
+	-- end	--							an test
+
+	-- local lifeTapMP_check = MagicCore.settings.InterfaceFetch("lifeTapMP_check")
+    -- local lifeTapMP_spin = tonumber(MagicCore.settings.InterfaceFetch("lifeTapMP_spin"))
+	-- print(tostring(lifeTapMP_check), lifeTapMP_spin)
+
 end
 
 
