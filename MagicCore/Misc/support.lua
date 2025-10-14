@@ -74,7 +74,7 @@ Support.TalentRank = function(spellID)
         BuildTalentCache()
     end
 	local rank;
-    local IsSpellKnown = IsSpellKnown(spellID, isPetSpell)
+    --local IsSpellKnown = IsSpellKnown(spellID, isPetSpell)
     local location = talentCache[spellID]
 	
     if location then
