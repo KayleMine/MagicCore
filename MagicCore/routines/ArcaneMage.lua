@@ -207,7 +207,8 @@ local function resting()
 	-- local lifeTapMP_check = MagicCore.settings.InterfaceFetch("lifeTapMP_check")
     -- local lifeTapMP_spin = tonumber(MagicCore.settings.InterfaceFetch("lifeTapMP_spin"))
 	-- print(tostring(lifeTapMP_check), lifeTapMP_spin)
-
+	-- print( 'talent 77: ', iknow(77), ' rank: ' .. TalentRank(77))
+	-- print( 'talent Arcane Mind: ', iknow('Arcane Mind'), ' rank: ' .. TalentRank('Arcane Mind'))
 end
 
 
