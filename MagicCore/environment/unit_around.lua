@@ -4,6 +4,7 @@ MagicCore.unit_around = MagicCore.unit_around or {}
 local unit_around = MagicCore.unit_around
 
 local function findAndSortUnit(objectGroup, rangeYards, filterPredicate, sortPredicate, isLowestHealth)
+	local rangeYards = rangeYards or 40;
     local tempTable = {}
     for _, Obj in pairs(_A.OM:Get(objectGroup)) do
         Obj.pointer = Obj.pointer or _A.ObjectPointer(Obj.guid)
@@ -34,6 +35,7 @@ local function findAndSortUnit(objectGroup, rangeYards, filterPredicate, sortPre
 end
 
 local function countUnits(objectGroup, rangeYards, sourceUnit, filterPredicate)
+	local rangeYards = rangeYards or 40;
     local source = sourceUnit or "player"
     local count = 0
     for _, Obj in pairs(_A.OM:Get(objectGroup)) do
@@ -54,6 +56,11 @@ end
 ------------------------------
 ----------Find Unit-----------
 ------------------------------
+
+unit_around.lowest = function(role)
+    local filter = role and function(Obj) return Obj:role() == role:upper() end or nil
+    return findAndSortUnit('Roster', 35, filter, nil, true)
+end
 
 -- Союзники (самое низкое HP, опциональная роль)
 unit_around.lowestInRange = function(rangeYards, role)
